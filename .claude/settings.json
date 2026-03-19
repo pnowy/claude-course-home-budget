@@ -1,0 +1,21 @@
+{
+  "permissions": {
+    "allow": [
+      "Bash(npm run *)",
+      "Bash(git status)",
+      "Bash(git commit *)",
+      "Bash(git diff *)",
+      "Read(src/**)",
+      "Edit(src/**)",
+      "Bash(* --version)",
+      "Bash(* --help *)"
+    ],
+    "ask": [
+      "Bash(git push *)"
+    ],
+    "deny": [
+      "Read(.env*)",
+      "Bash(rm -rf *)"
+    ]
+  }
+}
