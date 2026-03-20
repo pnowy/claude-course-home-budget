@@ -1,4 +1,5 @@
 import { createFileRoute, useNavigate } from "@tanstack/react-router";
+import { Plus } from "lucide-react";
 import MonthDonutChart from "#/components/MonthDonutChart";
 import RecentExpensesList from "#/components/RecentExpensesList";
 import ViewSwitcher from "#/components/ViewSwitcher";
@@ -45,9 +46,19 @@ function Dashboard() {
 
 	return (
 		<main className="page-wrap px-4 pb-8 pt-10">
-			<h1 className="mb-6 text-2xl font-bold text-[var(--sea-ink)] sm:text-3xl">
-				Home Budget
-			</h1>
+			<div className="mb-6 flex items-center justify-between gap-4">
+				<h1 className="text-2xl font-bold text-[var(--sea-ink)] sm:text-3xl">
+					Home Budget
+				</h1>
+				<button
+					type="button"
+					className="inline-flex items-center gap-2 rounded-full bg-[var(--lagoon)] px-4 py-2 text-sm font-semibold text-white shadow-[0_4px_14px_rgba(79,184,178,0.35)] transition hover:-translate-y-0.5 hover:bg-[var(--lagoon-deep)] focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-[var(--lagoon)] focus-visible:ring-offset-2 focus-visible:ring-offset-[var(--bg-base)]"
+					aria-label="Add new expense"
+				>
+					<Plus className="size-4" />
+					New Expense
+				</button>
+			</div>
 
 			<ViewSwitcher
 				view={view}
