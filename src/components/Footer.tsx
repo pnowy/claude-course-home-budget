@@ -9,7 +9,7 @@ export default function Footer() {
 					<a
 						href="https://przemeknowak.com/courses"
 						target="_blank"
-                        rel="noopener noreferrer"
+						rel="noopener noreferrer"
 					>
 						przemeknowak.com
 					</a>
