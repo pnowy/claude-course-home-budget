@@ -45,6 +45,15 @@ The `db` singleton (`src/db/index.ts`) throws at startup if `DATABASE_URL` is mi
 
 **Linting/Formatting**: Biome with tabs for indentation and double quotes for JS/TS. `routeTree.gen.ts` and `styles.css` are excluded from Biome.
 
+## Application
+
+Home Budget Tracker — a household budget management app. Users record expenses across categories (Housing, Food, Transport, Health, Entertainment, Savings, Other) and view spending summaries in two modes:
+
+- **Year view**: stacked bar chart showing monthly totals broken down by category for the selected year.
+- **Month view**: donut chart + recent expenses table for the selected month.
+
+Data is stored in SQLite (via Drizzle ORM) with two tables: `categories` (name, color, icon) and `expenses` (description, amount, currency, date, categoryId). Money is stored as `amount` (real) + `currency` (text, default `"PLN"`). URL search params (`?view=year|month&year=YYYY&month=M`) drive the current view state.
+
 ## Git
 
 For Git commits follow the following rules:
