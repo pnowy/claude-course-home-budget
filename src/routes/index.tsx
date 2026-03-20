@@ -1,29 +1,83 @@
-import { createFileRoute } from "@tanstack/react-router";
+import { createFileRoute, useNavigate } from "@tanstack/react-router";
+import { Plus } from "lucide-react";
+import MonthDonutChart from "#/components/MonthDonutChart";
+import RecentExpensesList from "#/components/RecentExpensesList";
+import ViewSwitcher from "#/components/ViewSwitcher";
+import YearBarChart from "#/components/YearBarChart";
+import {
+	getCategoryTotalsForMonth,
+	getExpensesForMonth,
+	getMonthlyTotalsByCategory,
+	MOCK_EXPENSES,
+} from "#/lib/mockData";
 
-export const Route = createFileRoute("/")({ component: App });
+export const Route = createFileRoute("/")({
+	validateSearch: (search: Record<string, unknown>) => ({
+		view: (search.view === "year" ? "year" : "month") as "year" | "month",
+		year:
+			typeof search.year === "number" ? search.year : new Date().getFullYear(),
+		month:
+			typeof search.month === "number"
+				? search.month
+				: new Date().getMonth() + 1,
+	}),
+	component: Dashboard,
+});
 
-function App() {
+function Dashboard() {
+	const { view, year, month } = Route.useSearch();
+	const navigate = useNavigate({ from: "/" });
+
+	const monthlyTotals = getMonthlyTotalsByCategory(MOCK_EXPENSES, year);
+	const categoryTotals = getCategoryTotalsForMonth(MOCK_EXPENSES, year, month);
+	const recentExpenses = getExpensesForMonth(MOCK_EXPENSES, year, month)
+		.sort((a, b) => b.date.localeCompare(a.date))
+		.slice(0, 10);
+
+	function handleViewChange(newView: "year" | "month") {
+		navigate({ search: (prev) => ({ ...prev, view: newView }) });
+	}
+
+	function handleMonthChange(newYear: number, newMonth: number) {
+		navigate({
+			search: (prev) => ({ ...prev, year: newYear, month: newMonth }),
+		});
+	}
+
 	return (
-		<main className="page-wrap px-4 pb-8 pt-14">
-			<section className="island-shell rise-in relative overflow-hidden rounded-[2rem] px-6 py-10 sm:px-10 sm:py-14">
-				<div className="pointer-events-none absolute -left-20 -top-24 h-56 w-56 rounded-full bg-[radial-gradient(circle,rgba(79,184,178,0.32),transparent_66%)]" />
-				<div className="pointer-events-none absolute -bottom-20 -right-20 h-56 w-56 rounded-full bg-[radial-gradient(circle,rgba(47,106,74,0.18),transparent_66%)]" />
-				<p className="island-kicker mb-3">TanStack Start Base Template</p>
-				<h1 className="display-title mb-5 max-w-3xl text-4xl leading-[1.02] font-bold tracking-tight text-[var(--sea-ink)] sm:text-6xl">
-					Start simple, ship quickly.
+		<main className="page-wrap px-4 pb-8 pt-10">
+			<div className="mb-6 flex items-center justify-between gap-4">
+				<h1 className="text-2xl font-bold text-[var(--sea-ink)] sm:text-3xl">
+					Home Budget
 				</h1>
-				<p className="mb-8 max-w-2xl text-base text-[var(--sea-ink-soft)] sm:text-lg">
-					This base starter intentionally keeps things light: two routes, clean
-					structure, and the essentials you need to build from scratch.
-				</p>
-				<div className="flex flex-wrap gap-3">
-					<a
-						href="/about"
-						className="rounded-full border border-[rgba(50,143,151,0.3)] bg-[rgba(79,184,178,0.14)] px-5 py-2.5 text-sm font-semibold text-[var(--lagoon-deep)] no-underline transition hover:-translate-y-0.5 hover:bg-[rgba(79,184,178,0.24)]"
-					>
-						About This Starter
-					</a>
-				</div>
+				<button
+					type="button"
+					className="inline-flex items-center gap-2 rounded-full bg-[var(--lagoon)] px-4 py-2 text-sm font-semibold text-white shadow-[0_4px_14px_rgba(79,184,178,0.35)] transition hover:-translate-y-0.5 hover:bg-[var(--lagoon-deep)] focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-[var(--lagoon)] focus-visible:ring-offset-2 focus-visible:ring-offset-[var(--bg-base)]"
+					aria-label="Add new expense"
+				>
+					<Plus className="size-4" />
+					New Expense
+				</button>
+			</div>
+
+			<ViewSwitcher
+				view={view}
+				year={year}
+				month={month}
+				onViewChange={handleViewChange}
+				onMonthChange={handleMonthChange}
+			/>
+
+			<section className="island-shell rounded-2xl p-6 sm:p-8 mt-6">
+				{view === "year" ? (
+					<YearBarChart data={monthlyTotals} />
+				) : (
+					<MonthDonutChart data={categoryTotals} year={year} month={month} />
+				)}
+			</section>
+
+			<section className="island-shell rounded-2xl p-6 sm:p-8 mt-6">
+				<RecentExpensesList expenses={recentExpenses} />
 			</section>
 		</main>
 	);
