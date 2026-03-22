@@ -13,6 +13,7 @@ __unconfig*
 
 # sqlite database
 dev.db
+.devdbrc
 
 # claude code
 .claude/settings.local.json
