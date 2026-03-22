@@ -2,6 +2,10 @@
 
 This file provides guidance to Claude Code (claude.ai/code) when working with code in this repository.
 
+## Package Manager
+
+Use **npm** (not pnpm/yarn). The lockfile is `package-lock.json`.
+
 ## Commands
 
 ```bash
@@ -37,9 +41,11 @@ The `db` singleton (`src/db/index.ts`) throws at startup if `DATABASE_URL` is mi
 
 **Database**: SQLite via `better-sqlite3` + Drizzle ORM. Schema is defined in `src/db/schema.ts`; the `db` instance is exported from `src/db/index.ts`. Run `db:generate` then `db:migrate` after schema changes.
 
-**Server functions**: Use `createServerFn` from `@tanstack/react-start` for server-side logic that integrates with client components. These run only on the server and can directly access `db`.
+**Server functions**: Use `createServerFn` from `@tanstack/react-start` for server-side logic that integrates with client components. These run only on the server and can directly access `db`. Server functions live in `src/server/`.
 
-**Styling**: Tailwind CSS v4 (via `@tailwindcss/vite`). Use the `cn()` utility from `src/lib/utils.ts` for conditional class merging. UI components are added via shadcn: `pnpm dlx shadcn@latest add <component>`.
+**Validation**: Zod v4 is used for input validation. Zod v4 implements Standard Schema, so schemas can be passed directly to `.inputValidator()` on server functions — no `@tanstack/zod-adapter` needed (that adapter is only for Zod v3).
+
+**Styling**: Tailwind CSS v4 (via `@tailwindcss/vite`). Use the `cn()` utility from `src/lib/utils.ts` for conditional class merging. UI components are added via shadcn: `npx shadcn@latest add <component>`.
 
 **Path alias**: `#/*` maps to `src/*` (e.g., `import { cn } from "#/lib/utils"`).
 

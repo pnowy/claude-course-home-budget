@@ -9,7 +9,9 @@
       "Read(src/**)",
       "Edit(src/**)",
       "Bash(* --version)",
-      "Bash(* --help *)"
+      "Bash(* --help *)",
+      "mcp__context7__*",
+      "mcp__devdb-mcp-server__*"
     ],
     "ask": [
       "Bash(git push *)"
