@@ -62,3 +62,8 @@ For Git commits follow the following rules:
 - commit messages should be concise and descriptive of the changes made
 - use the appropriate commit type (e.g., feat, fix, docs, style, refactor, test, chore) to indicate the nature of the changes
 - avoid using vague commit messages
+
+## Documentation
+
+- Always check the latest documentation via MCP before implementation
+- Use Context7 to verify library APIs
