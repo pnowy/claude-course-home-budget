@@ -7,8 +7,6 @@ import {
 	ResponsiveContainer,
 	Tooltip,
 } from "recharts";
-import type { Category } from "#/lib/mockData";
-
 const MONTH_NAMES = [
 	"January",
 	"February",
@@ -25,7 +23,7 @@ const MONTH_NAMES = [
 ];
 
 type DonutEntry = {
-	category: Category;
+	category: string;
 	total: number;
 	fill: string;
 };
