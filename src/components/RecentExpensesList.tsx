@@ -1,7 +1,7 @@
-import { CATEGORY_COLORS, type Expense } from "#/lib/mockData";
+import type { DbExpense } from "#/lib/mockData";
 
 type RecentExpensesListProps = {
-	expenses: Expense[];
+	expenses: DbExpense[];
 };
 
 export default function RecentExpensesList({
@@ -47,16 +47,16 @@ export default function RecentExpensesList({
 										<span
 											className="size-2.5 rounded-full shrink-0"
 											style={{
-												background: CATEGORY_COLORS[expense.category],
+												background: expense.categoryColor,
 											}}
 										/>
 										<span className="text-[var(--sea-ink)]">
-											{expense.category}
+											{expense.categoryName}
 										</span>
 									</span>
 								</td>
 								<td className="py-3 text-right font-semibold text-[var(--sea-ink)]">
-									{expense.money.amount} {expense.money.currency}
+									{expense.amount} {expense.currency}
 								</td>
 							</tr>
 						))}

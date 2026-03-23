@@ -8,13 +8,14 @@ import {
 	XAxis,
 	YAxis,
 } from "recharts";
-import { CATEGORIES, CATEGORY_COLORS } from "#/lib/mockData";
+import type { CategoryInfo } from "#/lib/mockData";
 
 type YearBarChartProps = {
 	data: Record<string, number | string>[];
+	categoryList: CategoryInfo[];
 };
 
-export default function YearBarChart({ data }: YearBarChartProps) {
+export default function YearBarChart({ data, categoryList }: YearBarChartProps) {
 	const [mounted, setMounted] = useState(false);
 
 	useEffect(() => {
@@ -25,7 +26,7 @@ export default function YearBarChart({ data }: YearBarChartProps) {
 		return <div className="h-80 animate-pulse rounded-xl bg-[var(--line)]" />;
 	}
 
-	const lastCategoryIndex = CATEGORIES.length - 1;
+	const lastCategoryIndex = categoryList.length - 1;
 
 	return (
 		<ResponsiveContainer width="100%" height={320}>
@@ -54,12 +55,12 @@ export default function YearBarChart({ data }: YearBarChartProps) {
 					}}
 					formatter={(value: number, name: string) => [`${value} zł`, name]}
 				/>
-				{CATEGORIES.map((cat, idx) => (
+				{categoryList.map((cat, idx) => (
 					<Bar
-						key={cat}
-						dataKey={cat}
+						key={cat.name}
+						dataKey={cat.name}
 						stackId="a"
-						fill={CATEGORY_COLORS[cat]}
+						fill={cat.color}
 						radius={idx === lastCategoryIndex ? [4, 4, 0, 0] : [0, 0, 0, 0]}
 					/>
 				))}
