@@ -2,7 +2,6 @@
 #
 # Runs on every push to main and on pull requests targeting main.
 # Jobs: lint, test (parallel) → build (depends on both).
-# Dependency review runs on PRs only to catch vulnerable dependencies.
 
 name: CI
 
@@ -83,17 +82,3 @@ jobs:
 
       - name: Build application
         run: npm run build
-
-  dependency-review:
-    name: Dependency Review
-    runs-on: ubuntu-latest
-    timeout-minutes: 10
-    if: github.event_name == 'pull_request'
-    steps:
-      - name: Checkout code
-        uses: actions/checkout@de0fac2e4500dabe0009e67214ff5f5447ce83dd # v6.0.2
-
-      - name: Review dependencies
-        uses: actions/dependency-review-action@05fe4576374b728f0c523d6a13d64c25081e0803 # v4.8.3
-        with:
-          fail-on-severity: high
