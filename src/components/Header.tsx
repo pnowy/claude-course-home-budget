@@ -48,15 +48,7 @@ export default function Header() {
 					>
 						About
 					</Link>
-					<a
-						href="https://tanstack.com/start/latest/docs/framework/react/overview"
-						className="nav-link"
-						target="_blank"
-						rel="noreferrer"
-					>
-						Docs
-					</a>
-				</div>
+					</div>
 			</nav>
 		</header>
 	);

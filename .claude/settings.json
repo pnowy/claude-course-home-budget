@@ -20,5 +20,18 @@
       "Read(.env*)",
       "Bash(rm -rf *)"
     ]
+  },
+  "hooks": {
+    "PostToolUse":[
+      {
+        "matcher": "Edit|Write",
+        "hooks": [
+          {
+            "type": "command",
+            "command": "echo \"$(date) lint triggered\" >> /tmp/hook.log && npm run lint"
+          }
+        ]
+      }
+    ]
   }
 }
