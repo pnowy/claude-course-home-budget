@@ -17,5 +17,6 @@ dev.db
 
 # claude code
 .claude/settings.local.json
+.claude/worktrees/
 CLAUDE.local.md
 /reports
